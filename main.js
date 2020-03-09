@@ -71,6 +71,23 @@ class LinkedList {
     this.size++;
   }
 
+  //Get value at a given index of linked list
+  getAt(index) {
+    let current = this.head; // Start at beginning of linked list
+    let count = 0; //Setup counter for the while loop
+    let indexValue;
+
+    while (current) {
+      if (count == index) {
+        indexValue = current.value;
+      }
+      count++; //Increment counter
+      current = current.next; //Move to next node
+    }
+    console.log(indexValue);
+    return indexValue;
+  }
+
   // Print list data
   printListData() {
     let current = this.head;
@@ -89,7 +106,6 @@ testList.insertAt(200, 1);
 testList.insertAt(300, 2);
 testList.insertAt(400, 3);
 testList.insertEnd(500);
+testList.getAt(3);
 
 console.log(testList);
-
-testList.printListData();
