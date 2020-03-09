@@ -1,0 +1,11 @@
+{
+  "name": "04_dsa_linked_lists",
+  "version": "1.0.0",
+  "description": "DSA-Linked-Lists Exercises completed in the Thinkful Data Structures and Algorithms module on linked lists.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Matt Thornberry",
+  "license": "ISC"
+}
