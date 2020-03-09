@@ -88,6 +88,33 @@ class LinkedList {
     return indexValue;
   }
 
+  //Remove value at a given index from linked list
+  removeAt(index) {
+    // EDGE CASE -> If index is out of range
+    if (index > 0 && index > this.size) {
+      throw new Error(`Index Error -> ${index} is out of range`);
+    }
+
+    let current = this.head; // Start at the beginning of linked list
+    let previous;
+    let count = 0; //Setup counter for while loop
+
+    // If request to remove the first item in linked list
+    if (index === 0) {
+      this.head = current.next;
+    } else {
+      while (count < index) {
+        count++;
+        previous = current;
+        current = current.next;
+      }
+
+      previous.next = current.next;
+    }
+
+    this.size--;
+  }
+
   // Print list data
   printListData() {
     let current = this.head;
@@ -107,5 +134,9 @@ testList.insertAt(300, 2);
 testList.insertAt(400, 3);
 testList.insertEnd(500);
 testList.getAt(3);
+
+testList.removeAt(2);
+
+testList.printListData();
 
 console.log(testList);
