@@ -16,7 +16,17 @@ class LinkedList {
   }
 
   //Insert a value at the end of the linked list
-  insertEnd(data) {}
+  insertEnd(data) {
+    if (this.head === null) {
+      this.insertBeginning(data);
+    } else {
+      let tempNode = this.head;
+      while (tempNode.next !== null) {
+        tempNode = tempNode.next;
+      }
+      tempNode.next = new _Node(data, null);
+    }
+  }
 
   //Insert at a specific index of the linked list
   insertAt(data, index) {}
@@ -25,5 +35,6 @@ class LinkedList {
 let testList = new LinkedList();
 
 testList.insertBeginning(50);
+testList.insertEnd(75);
 
 console.log(testList);
