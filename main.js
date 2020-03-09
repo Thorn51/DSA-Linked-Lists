@@ -1,5 +1,5 @@
 class _Node {
-  constructor(value, next) {
+  constructor(value, next = null) {
     this.value = value;
     this.next = next;
   }
@@ -27,12 +27,22 @@ class LinkedList {
         tempNode = tempNode.next;
       }
       tempNode.next = new _Node(data, null);
-      this.size++;
     }
+    this.size++;
   }
 
   //Insert at a specific index of the linked list
-  insertAt(data, index) {}
+  insertAt(data, index) {
+    if (index < 0 || index >= this.size) {
+      throw new Error("Index error");
+    }
+    if (index === 0) {
+      return this.insertBeginning(data);
+    }
+    if (index === this.size - 1) {
+      return this.insertEnd(data);
+    }
+  }
 
   // Print list data
   printListData() {
@@ -48,7 +58,6 @@ class LinkedList {
 let testList = new LinkedList();
 
 testList.insertBeginning(50);
-testList.insertBeginning(75);
 testList.insertBeginning(100);
 
 console.log(testList);
