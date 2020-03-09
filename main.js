@@ -21,3 +21,9 @@ class LinkedList {
   //Insert at a specific index of the linked list
   insertAt(data, index) {}
 }
+
+let testList = new LinkedList();
+
+testList.insertBeginning(50);
+
+console.log(testList);
