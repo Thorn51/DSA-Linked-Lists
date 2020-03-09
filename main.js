@@ -115,6 +115,12 @@ class LinkedList {
     this.size--;
   }
 
+  //Clear the list, does not clear data from memory
+  clearList() {
+    this.head = null;
+    this.size = 0;
+  }
+
   // Print list data
   printListData() {
     let current = this.head;
@@ -135,7 +141,7 @@ testList.insertAt(400, 3);
 testList.insertEnd(500);
 testList.getAt(3);
 
-testList.removeAt(2);
+testList.clearList();
 
 testList.printListData();
 
