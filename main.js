@@ -11,7 +11,9 @@ class LinkedList {
   }
 
   //Insert a value at index 0 of linked list
-  insertBeginning(data) {}
+  insertBeginning(data) {
+    this.head = new _Node(data, this.head);
+  }
 
   //Insert a value at the end of the linked list
   insertEnd(data) {}
