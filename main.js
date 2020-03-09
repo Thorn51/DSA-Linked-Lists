@@ -33,15 +33,42 @@ class LinkedList {
 
   //Insert at a specific index of the linked list
   insertAt(data, index) {
-    if (index < 0 || index >= this.size) {
-      throw new Error("Index error");
+    // EDGE CASE -> Index does not exist
+    if (index > 0 && index > this.size) {
+      throw new Error(`Index Error -> ${index} is out of range`);
     }
+
+    //If we insert at beginning
     if (index === 0) {
-      return this.insertBeginning(data);
+      this.insertBeginning(data);
+      return;
     }
+
+    //If we insert at the end
     if (index === this.size - 1) {
-      return this.insertEnd(data);
+      this.insertEnd(data);
+      return;
     }
+
+    const node = new _Node(data);
+    let current, previous;
+
+    //Set current to first
+    current = this.head;
+
+    //Set a counter for the while loop
+    let count = 0;
+
+    while (count < index) {
+      previous = current; // Node before index
+      count++;
+      current = current.next; // Node after index
+    }
+
+    node.next = current;
+    previous.next = node;
+
+    this.size++;
   }
 
   // Print list data
@@ -57,8 +84,11 @@ class LinkedList {
 
 let testList = new LinkedList();
 
-testList.insertBeginning(50);
 testList.insertBeginning(100);
+testList.insertAt(200, 1);
+testList.insertAt(300, 2);
+testList.insertAt(400, 3);
+testList.insertEnd(500);
 
 console.log(testList);
 
