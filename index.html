@@ -10,15 +10,208 @@
     <h1>Linked Lists</h1>
     <p></p>
     <section class="examples">
-      <h2></h2>
-      <p></p>
+      <h2>Node</h2>
+      <p>
+        The unit of memory holding a single item in a linked list is a node in
+        the list. A node can be allocated from anywhere in the memory, it does
+        not have to be next to the previously allocated node.
+      </p>
+      <p>
+        Each node consists of a value and a pointer to the next node in the
+        sequence. This type of linked list is called a singly linked list. There
+        is also a type of linked list called a doubly linked list where nodes
+        contain a pointer to the previous node in addition to the next.
+      </p>
+      <pre>
+        <code>
+            class _Node {
+                constructor(value, next) {
+                    this.value = value;
+                    this.next = next;
+                }
+            }
+        </code>
+      </pre>
+      <p class="note">
+        <span class="bold">NOTE:</span> The node class is prefixed wiht an
+        underscore. This indicates that the node class is a private class that
+        should not be accessible by anything other than the linked list class.
+      </p>
+      <h2>Linked List Class</h2>
+      <p>
+        The linked list has a head to indicate the beginning of the list. The
+        head always contains the 1st node. In this case, we start with an empty
+        list, represented by null.
+      </p>
+      <pre>
+        <code>
+            class LinkedList {
+                constructor() {
+                  this.head = null;
+                }
+            }
+        </code>
+      </pre>
+      <h2>Linked List Methods</h2>
+      <p>
+        The primary operations in a linked list are insert, remove, and get
+        (find).
+      </p>
+      <h2>Insertion</h2>
+      <p>
+        There can be 3 different implementations of the insert operation in a
+        list. An item can be inserted:
+      </p>
       <ul>
-        <li><span class="bold"></span></li>
-        <li><span class="bold"></span></li>
-        <li><span class="bold"></span></li>
+        <li>Insert at beginning of list - insertFirst(item)</li>
+        <li>Insert at the end of the list - insertLast(item)</li>
+        <li>Insert between existing nodes - insertAt(item)</li>
+      </ul>
+      <h3>Insert First</h3>
+      <p>To insert a value at the beginning of the list:</p>
+      <ul>
+        <li>Create a new node item</li>
+        <li>Point head to that new node</li>
       </ul>
       <pre>
         <code>
+            ...
+
+            insertFirst(item) {
+                this.head = new _Node(item, this.head);
+            }
+            ...
+        </code>
+      </pre>
+      <h3>Insert Last</h3>
+      <p>To insert a value at the end of the list</p>
+      <ul>
+        <li>Create a new node</li>
+        <li>
+          If list is empty then insert the new item using insertFirst() method
+        </li>
+        <li>
+          Start at the beginning of the list and move through the list until you
+          reach the end of the list
+        </li>
+        <li>Set the end node's next point to the new node</li>
+        <li>
+          The new node's next pointer is null, null indicates the end of the
+          list
+        </li>
+      </ul>
+      <pre>
+        <code>
+            insertLast(item) {
+                if(this.head === null) {
+                  this.insertFirst(item);
+                } else {
+                  let tempNode = this.head;
+                  while (tempNode.next !== null) {
+                    tempNode = tempNode.next;
+                  }
+                  tempNode.next = new _Node(item, null)
+                }
+            
+            }
+        </code>
+      </pre>
+      <h2>Retrieval</h2>
+      <p>To retrieve a value in a linked list:</p>
+      <ul>
+        <li>Check if list is empty</li>
+        <li>Traverse list</li>
+        <li>Compare the value in each node</li>
+        <li>When value found, return value</li>
+      </ul>
+      <pre>
+        <code>
+            ...
+
+            find(item) {
+
+                // Start at the head
+                let currNode = this.head;
+                
+                // Check if list is empty
+                if (!this.head) {
+                  return null;
+                }
+                
+                // Check for the item
+                while (currNode.value !== item) {
+                  
+                  // Return null if the end of the list is reached without finding item
+                  
+                  if (currNode.next === null) {
+                    return null;
+                  } else {
+                    currNode = currNode.next;
+                  }
+                }
+                
+                // Return the node when it is found
+                return currNode;
+            }
+
+            ...
+        </code>
+      </pre>
+      <h2>Removal</h2>
+      <p>
+        Removing a node from the linked list requires managing either the head
+        or the pointers in the linked list. If removing the first item we need
+        to update the next node to be the head. Removing other nodes requires
+        pointer reassignment. There are three cases that must be managed to
+        properly update the nodes impacted by the removal of a node:
+      </p>
+      <ul>
+        <li>Update Head - delete the first node of the list</li>
+        <li>
+          Update Previous Pointer to Null - delete the last node of the list
+          (change one pointer)
+        </li>
+        <li>
+          Update Adjacent Pointers - delete a node between other nodes (change
+          two pointers)
+        </li>
+      </ul>
+      <pre>
+        <code>
+            ...
+
+            remove(item) {
+
+                // if the list is empty 
+                if(!this.head) {
+                  return null;
+                }
+            
+                // If the node to be removed is the head, make next node the head
+                if(this.head.value === item) {
+                  this.head = this.head.next;
+                  return
+                }
+            
+                // Start at the head
+                let currNode = this.head
+            
+                // Keep track of previous head
+                let previousNode = this.head
+            
+                while((currNode !== null) && (currNode.value !== item)) {
+                  // save the previous node
+                  previousNode = currNode;
+                  currNode = currNode.next
+                }
+                if(currNode === null) {
+                  console.log('Item not found')
+                  return
+                }
+                previousNode.next = currNode.next
+            }
+
+            ...
         </code>
       </pre>
     </section>
