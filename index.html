@@ -24,11 +24,15 @@
       </p>
       <pre>
         <code>
+            // Private node class used by linked list
+            
             class _Node {
-                constructor(value, next) {
-                    this.value = value;
-                    this.next = next;
-                }
+              constructor(value, next) {
+                // The value stored in the node
+                this.value = value;
+                // Stores address of the next node
+                this.next = next;
+              }
             }
         </code>
       </pre>
@@ -47,7 +51,8 @@
         <code>
             class LinkedList {
                 constructor() {
-                  this.head = null;
+                    // The head is the beginning of the list
+                    this.head = null
                 }
             }
         </code>
@@ -75,21 +80,26 @@
       </ul>
       <pre>
         <code>
-            ...
-
-            insertFirst(item) {
-                this.head = new _Node(item, this.head);
+            class LinkedList {
+                constructor() {
+                  this.head = null
+                }
+              
+                insertFirst(value) {
+                  // Create a new node at the head of the list
+                  this.head = new _Node(value, this.head)
+                }
             }
-            ...
         </code>
       </pre>
       <h3>Insert Last</h3>
       <p>To insert a value at the end of the list</p>
       <ul>
-        <li>Create a new node</li>
         <li>
-          If list is empty then insert the new item using insertFirst() method
+          If the list is empty then insert the new item using insertFirst()
+          method
         </li>
+        <li>Create a new node</li>
         <li>
           Start at the beginning of the list and move through the list until you
           reach the end of the list
@@ -102,18 +112,21 @@
       </ul>
       <pre>
         <code>
-            insertLast(item) {
-                if(this.head === null) {
-                  this.insertFirst(item);
-                } else {
-                  let tempNode = this.head;
-                  while (tempNode.next !== null) {
-                    tempNode = tempNode.next;
+           ...
+                insertLast(value) {
+                  // If this list is empty insert at beginning
+                  if (this.head === null) {
+                    this.insertFirst(value);
+                  } else {
+                    // Create a new node
+                    let tempNode = this.head;
+                    while (tempNode.next !== null) {
+                      tempNode = tempNode.next;
+                    }
+                    tempNode = new _Node(value, null);
                   }
-                  tempNode.next = new _Node(item, null)
                 }
-            
-            }
+            ...
         </code>
       </pre>
       <h2>Retrieval</h2>
@@ -127,33 +140,25 @@
       <pre>
         <code>
             ...
-
-            find(item) {
-
-                // Start at the head
-                let currNode = this.head;
-                
-                // Check if list is empty
-                if (!this.head) {
-                  return null;
-                }
-                
-                // Check for the item
-                while (currNode.value !== item) {
-                  
-                  // Return null if the end of the list is reached without finding item
-                  
-                  if (currNode.next === null) {
+                get(value) {
+                  // Start the search at the beginning of the list
+                  let currNode = this.head;
+                  // Check to see if the list is empty
+                  if (!this.head) {
                     return null;
-                  } else {
-                    currNode = currNode.next;
                   }
+                  // Traverse the list checking for the value
+                  while (currNode.value !== value) {
+                    // Check if the end is reached
+                    if (currNode.next === null) {
+                      return null;
+                    } else {
+                      // Keep traversing the list
+                      currNode = currNode.next;
+                    }
+                  }
+                  return currNode;
                 }
-                
-                // Return the node when it is found
-                return currNode;
-            }
-
             ...
         </code>
       </pre>
@@ -179,38 +184,32 @@
       <pre>
         <code>
             ...
-
-            remove(item) {
-
-                // if the list is empty 
-                if(!this.head) {
-                  return null;
+                remove(value) {
+                    // Check for an empty list
+                    if (!this.head) {
+                        return null;
+                    }
+                    // If this head node is removed make the next node the head
+                    if (this.head.value === value) {
+                        this.head = this.head.next;
+                        return;
+                    }
+                
+                    // Start traversing the list at the beginning
+                    let currNode = this.head;
+                    // Keep track of the previous node
+                    let previousNode = this.head;
+                
+                    while (currNode !== null && currNode.value !== value) {
+                        previousNode = currNode;
+                        currNode = currNode.next;
+                    }
+                    if (currNode === null) {
+                        console.log("Value not found");
+                        return;
+                    }
+                    previousNode.next = currNode.next;
                 }
-            
-                // If the node to be removed is the head, make next node the head
-                if(this.head.value === item) {
-                  this.head = this.head.next;
-                  return
-                }
-            
-                // Start at the head
-                let currNode = this.head
-            
-                // Keep track of previous head
-                let previousNode = this.head
-            
-                while((currNode !== null) && (currNode.value !== item)) {
-                  // save the previous node
-                  previousNode = currNode;
-                  currNode = currNode.next
-                }
-                if(currNode === null) {
-                  console.log('Item not found')
-                  return
-                }
-                previousNode.next = currNode.next
-            }
-
             ...
         </code>
       </pre>
@@ -223,12 +222,6 @@
         well. Then write a linked list class and its core functions
         (insertFirst, insertLast, remove, find) from scratch.
       </p>
-      <pre>
-        <code>
-        </code>
-      </pre>
-      <p class="answer"><span class="bold">Answer:</span></p>
-      <p class="note"><span class="bold">NOTE:</span></p>
       <h3>2. Creating a singly linked list</h3>
       <p class="question">
         Write a function main. Within the function, using the linked list class
@@ -241,14 +234,120 @@
         <li>
           Implement a function called `insertBefore()` in the class that inserts
           a new node before a given node containing a key.
+          <pre>
+            <code>
+                ...
+                  insertBefore(value, nodeValue) {
+                    // Check to see if the list is empty
+                    if (this.head === null) {
+                      return null;
+                    }
+                
+                    // Start at beginning of the list
+                    let currentNode = this.head;
+                    // Keep track of the previous node
+                    let previousNode = this.head;
+                
+                    while (currentNode.value !== nodeValue) {
+                      if (currentNode.next === null) {
+                        return null;
+                      }
+                      previousNode = currentNode;
+                      currentNode = currentNode.next;
+                    }
+                    previousNode.next = new _Node(value, currentNode);
+                  }
+                ...
+            </code>
+          </pre>
         </li>
         <li>
           Implement a function called `insertAfter()` in the class that inserts
           a new node after a node containing the key.
+          <pre>
+            <code>
+              ...
+                insertAfter(value, nodeValue) {
+                  // Check if the list is empty
+                  if (this.head === null) {
+                    return null;
+                  }
+              
+                  // Start at the beginning of the list
+                  let currentNode = this.head;
+                  // Figure out what the next node is
+                  let nextNode = this.head.next;
+              
+                  // Iterate over the list
+                  while (currentNode.value !== nodeValue) {
+                    // Check to make sure nodeValue exists, otherwise get loopy
+                    if (currentNode.next === null) {
+                      return null;
+                    } else {
+                      currentNode = currentNode.next;
+                      nextNode = currentNode.next;
+                    }
+                  }
+                  if (currentNode.next === null) {
+                    this.insertLast(value);
+                  } else {
+                    currentNode.next = new _Node(value, nextNode);
+                  }
+                }
+              ...
+            </code>
+          </pre>
         </li>
         <li>
           Implement a function called `insertAt()` that inserts an item at a
           specific position in the linked list.
+          <pre>
+            <code>
+              ...
+                insertAt(value, index) {
+                  // Check if the list is empty
+                  if (this.head === null) {
+                    return null;
+                  }
+              
+                  // Use index positioning first item = 0, second 1, etc.
+                  let indexStart = 0;
+                  // Start at the beginning of the list
+                  let currentNode = this.head;
+                  // Keep previous node
+                  let previousNode = this.head;
+              
+                  // Evaluate current list position
+                  while (indexStart !== index) {
+                    // check if the end of the list has been reached
+                    if (currentNode.next === null) {
+                      return { error: `Index ${index} out of range` };
+                    }
+                    previousNode = currentNode;
+                    currentNode = currentNode.next;
+                    indexStart++;
+                  }
+              
+                  // If the index is 0 || currentNode is the head
+                  if (currentNode === this.head) {
+                    this.insertFirst(value);
+                  } else {
+                    previousNode.next = new _Node(value, currentNode.next);
+                  }
+                }
+              ...
+            </code>
+          </pre>
+          <p class="note">
+            <span class="bold">NOTE:</span> Throughout the curriculum when we
+            encounter a operation that cannot be peformed we return null. For
+            example in this method if the index does not exist the curriculum
+            would return null. I keep thinking there is a better way to handle
+            this. Do we throw an exception 'throw new Error('Index out of
+            range')'? How about what I did here with 'return { error: `Index
+            ${index} out of range` }`? At this point I'm not sure of the answer.
+            It seems returning null does not provide anything useful.
+          </p>
         </li>
         <li>
           Add `Athena` before Boomer using your `insertBefore()` function.
@@ -260,12 +359,12 @@
         </li>
         <li>Remove `Tauhida` from the list.</li>
       </ul>
-      <pre>
-        <code>
-        </code>
-      </pre>
-      <p class="answer"><span class="bold">Answer:</span></p>
-      <p class="note"><span class="bold">NOTE:</span></p>
+      <p class="note">
+        <span class="bold">NOTE:</span> What other useful information can the
+        LinkedList constructor hold? I keep thinking that length of list would
+        be useful. If that is the case then each method that adds or removes a
+        node needs to manage the length.
+      </p>
       <h3>3. Supplemental functions for a linked list</h3>
       <p class="question">
         Implement the following functions that operate on your linked list
@@ -274,21 +373,168 @@
         Test each function using the list created in exercise 1.
       </p>
       <ul>
-        <li>`display`: displays the linked list</li>
-        <li>`size`: returns the size of the linked list</li>
+        <li>
+          `display`: displays the linked list
+          <pre>
+            <code>
+              ...
+                display() {
+                  // Check if the list is empty
+                  if (this.head === null) {
+                    console.log("The list is empty");
+                    return 0;
+                  }
+              
+                  // Start at the beginning of the list
+                  let currentNode = this.head;
+              
+                  // Store the values of the list in a string
+                  let valuesString = "";
+              
+                  // Iterate over the list
+                  while (currentNode) {
+                    valuesString += currentNode.value + ", ";
+                    currentNode = currentNode.next;
+                  }
+                  console.log(valuesString);
+                  return valuesString;
+                }
+              ...
+            </code>
+          </pre>
+          <p class="note">
+            <span class="bold">NOTE:</span> I'm unsure of the proper format to
+            print a linked list. Here I'm returning a string. I could see
+            pushing to an array, but this might be confusing? I've added a comma
+            to the end of each value but this is probably unnecessary.
+          </p>
+        </li>
+        <li>
+          `size`: returns the size of the linked list
+          <pre>
+            <code>
+              ... 
+                numberOfNodes() {
+                  // Check if there are any nodes in the list
+                  if (this.head === null) {
+                    return 0;
+                  }
+              
+                  // Store the size of the linked list
+                  let size = 0;
+              
+                  // Start at the head of the linked list
+                  let currentNode = this.head;
+              
+                  while (currentNode) {
+                    currentNode = currentNode.next;
+                    size++;
+                  }
+                  console.log(`The linked list has ${size} nodes`);
+                  return size;
+                }
+              ...
+            </code>
+          </pre>
+          <p class="note">
+            <span class="bold">NOTE:</span> I'm tracking the size of the linked
+            list in the constructor. However, I wanted to meet the intent of
+            this so I built a method as well.
+          </p>
+        </li>
         <li>
           `isEmpty`: finds if the list is empty or not (without using the size()
           function)
+          <pre>
+            <code>
+              ... 
+                isEmpty() {
+                  if (this.head === null) {
+                    console.log("There are no nodes in the list");
+                    return true;
+                  } else {
+                    console.log(`The list has ${this.size} nodes`);
+                    return false;
+                  }
+                }
+              ...
+            </code>
+          </pre>
         </li>
         <li>
           `findPrevious`: finds the node before the item you are looking for
+          <pre>
+            <code>
+              ... 
+                findPrevious(value) {
+                  // Check if list is empty
+                  if (this.head === null) {
+                    return null;
+                  }
+              
+                  // If the given value is the head of the list return
+                  if (this.head.value === value) {
+                    console.log("Given value is head of list");
+                    return null;
+                  }
+                  // Start at the head of the list
+                  let currentNode = this.head;
+              
+                  // Keep track of the previous node
+                  let previousNode = this.head;
+              
+                  while (currentNode.value !== value) {
+                    if (currentNode.next === null) {
+                      console.log("Given value not in list");
+                      return null;
+                    }
+                    previousNode = currentNode;
+                    currentNode = currentNode.next;
+                  }
+              
+                  console.log(previousNode);
+                  return previousNode;
+                }
+              }
+            ...
+            </code>
+          </pre>
         </li>
-        <li>`findLast`: returns the last node in the linked list</li>
+        <li>
+          `findLast`: returns the last node in the linked list
+          <pre>
+            <code>
+              ... 
+                findLast() {
+                  // Check if the list is empty
+                  if (this.head === null) {
+                    return null;
+                  }
+              
+                  // Get the index
+                  let index = 0;
+                  //Start at the head node
+                  let currentNode = this.head;
+              
+                  while (currentNode.next !== null) {
+                    currentNode = currentNode.next;
+                    index++;
+                  }
+              
+                  console.log(currentNode, { index });
+                  return currentNode;
+                }
+              ...
+            </code>
+          </pre>
+          <p class="note">
+            <span class="bold">NOTE:</span> I added an object to the console log
+            to display the index of the returned value. There is no particular
+            reason other than I wanted to.
+          </p>
+        </li>
       </ul>
-      <pre>
-        <code>
-        </code>
-      </pre>
+
       <p class="answer"><span class="bold">Answer:</span></p>
       <p class="note"><span class="bold">NOTE:</span></p>
       <h3>4. Mystery program</h3>
@@ -334,7 +580,7 @@
       </pre>
       <p class="answer"><span class="bold">Answer:</span></p>
       <p class="note"><span class="bold">NOTE:</span></p>
-      <h3>6. 3ed from the end</h3>
+      <h3>6. 3rd from the end</h3>
       <p class="question">
         Write an algorithm to find the 3rd element from the end of a linked
         list. Note You may be tempted to add a length property to your linked
