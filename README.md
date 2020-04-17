@@ -2,7 +2,7 @@
 
 ## Working with Linked Lists
 
-The drills in this section are completing using the following files:
+The drills in this section are completed using the following files:
 
 - `linked-lis.js` - This file contains the private node class and the linked list class. All of the methods in the linked list class are from the curriculum or from the drills.
 - `main.js` - This file contains function calls to test the various methods completed in the drills
