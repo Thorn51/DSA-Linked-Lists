@@ -4,7 +4,7 @@
 
 The drills in this section are completed using the following files:
 
-- `linked-lis.js` - This file contains the private node class and the linked list class. All of the methods in the linked list class are from the curriculum or from the drills.
+- `linked-list.js` - This file contains the private node class and the linked list class. All of the methods in the linked list class are from the curriculum or from the drills.
 - `main.js` - This file contains function calls to test the various methods completed in the drills
 
 The code in these files is littered with console logs. In a normal working environment these would be removed, but in this case they are intentionally left in for illustrative purposes to help learn the content.
